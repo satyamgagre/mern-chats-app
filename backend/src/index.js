@@ -2,14 +2,26 @@ import express from "express";
 import dotenv from "dotenv";
 
 import authRoutes from "./routes/auth.route.js";
+import { connectDB } from "./lib/db.js";
 
 dotenv.config();
+
 const app = express();
+const PORT = process.env.PORT || 5001;
 
-const PORT = process.env.PORT
+// Middleware to parse JSON requests
+app.use(express.json());
 
-app.use("/api/auth", authRoutes)
+// Routes
+app.use("/api/auth", authRoutes);
 
-app.listen(5001, () => {
-    console.log("Server is running on port:"+ PORT);
-});
+// Start server only after DB connection
+connectDB()
+  .then(() => {
+    app.listen(PORT, () => {
+      console.log(`🚀 Server running on port: ${PORT}`);
+    });
+  })
+  .catch((error) => {
+    console.error("❌ Failed to start server:", error.message);
+  });
