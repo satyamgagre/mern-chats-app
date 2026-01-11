@@ -2,6 +2,7 @@ import { useState } from "react";
 import { MessageSquare, User, Mail, Lock, EyeOff, Eye, Loader2 } from "lucide-react";
 import { useAuthStore } from "../store/useAuthStore";
 import { Link } from "react-router-dom";
+import toast from "react-hot-toast";
 
 import AuthImagePattern from "../components/AuthImagePattern";
 
@@ -27,16 +28,17 @@ const SignUpPage = () => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    const error = validateForm();
-    if (error) {
-      alert(error); // replace with toast later
-      return;
-    }
+  const error = validateForm();
+  if (error) {
+    toast.error(error);
+    return;
+  }
 
-    await signup(formData);
-  };
+  await signup(formData);
+};
+
 
   return (
     <div className="min-h-screen grid lg:grid-cols-2">
