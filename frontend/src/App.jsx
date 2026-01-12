@@ -8,6 +8,7 @@ import SettingsPage from "./pages/SettingsPage";
 
 import { Routes, Route, Navigate } from "react-router-dom";
 import { useAuthStore } from "./store/useAuthStore";
+import { useThemeStore } from "./store/useThemeStore"; // ✅ FIX
 import { useEffect } from "react";
 
 import { Loader } from "lucide-react";
@@ -15,12 +16,17 @@ import { Toaster } from "react-hot-toast";
 
 const App = () => {
   const { authUser, checkAuth, isCheckingAuth } = useAuthStore();
+  const { theme } = useThemeStore();
 
+  // Auth check
   useEffect(() => {
     checkAuth();
   }, [checkAuth]);
 
-  console.log({ authUser });
+  // ✅ Apply DaisyUI theme globally
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", theme);
+  }, [theme]);
 
   if (isCheckingAuth && !authUser) {
     return (
@@ -31,7 +37,7 @@ const App = () => {
   }
 
   return (
-    <div>
+    <>
       <Navbar />
 
       <Routes>
@@ -54,8 +60,8 @@ const App = () => {
         />
       </Routes>
 
-      <Toaster/>
-    </div>
+      <Toaster />
+    </>
   );
 };
 
