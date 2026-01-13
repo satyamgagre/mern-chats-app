@@ -1,7 +1,7 @@
 const AuthImagePattern = ({ title, subtitle }) => {
   return (
-    <div className="hidden lg:flex items-center justify-center bg-base-200 p-12">
-      <div className="max-w-md text-center">
+    <div className="hidden lg:flex flex-col items-center justify-between bg-base-200 p-12 min-h-screen">
+      <div className="max-w-md text-center flex-1 flex flex-col justify-center">
         <div className="space-y-4 mb-8">
           {/* Left messages */}
           <div className="flex justify-start">
@@ -41,10 +41,22 @@ const AuthImagePattern = ({ title, subtitle }) => {
             </div>
           </div>
         </div>
+        
         <h2 className="text-2xl font-bold mb-4">{title}</h2>
         <p className="text-base-content/60">{subtitle}</p>
+      </div>
+      
+      {/* Footer attribution - positioned at bottom */}
+      <div className="w-full text-center pb-4">
+        <p className="text-sm text-base-content/50">
+          Made with ❤️ by <span className="font-semibold text-primary">SA8YA</span>
+        </p>
+        <p className="text-xs text-base-content/40 mt-1">
+          © {new Date().getFullYear()} All rights reserved
+        </p>
       </div>
     </div>
   );
 };
+
 export default AuthImagePattern;

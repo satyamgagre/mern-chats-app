@@ -32,7 +32,7 @@ const Navbar = () => {
               className="btn btn-sm gap-2 transition-colors"
             >
               <Settings className="size-4" />
-              <span className="hidden sm:inline">Settings</span>
+              <span className="hidden sm:inline capitalize">Settings</span>
             </Link>
 
             {authUser && (
@@ -42,7 +42,7 @@ const Navbar = () => {
                   className="btn btn-sm gap-2"
                 >
                   <User className="size-5" />
-                  <span className="hidden sm:inline">Profile</span>
+                  <span className="hidden sm:inline capitalize">Profile</span>
                 </Link>
 
                 <button
@@ -50,7 +50,7 @@ const Navbar = () => {
                   onClick={logout}
                 >
                   <LogOut className="size-5" />
-                  <span className="hidden sm:inline">Logout</span>
+                  <span className="hidden sm:inline capitalize">Logout</span>
                 </button>
               </>
             )}
