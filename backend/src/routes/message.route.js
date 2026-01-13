@@ -8,7 +8,10 @@ import {
 
 const router = express.Router();
 
-router.get("/user", protectRoute, getUsersForSidebar);
+// ✅ static route FIRST
+router.get("/users", protectRoute, getUsersForSidebar);
+
+// ✅ dynamic routes AFTER
 router.get("/:id", protectRoute, getMessages);
 router.post("/send/:id", protectRoute, sendMessage);
 
