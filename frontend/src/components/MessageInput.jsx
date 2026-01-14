@@ -7,7 +7,7 @@ const MessageInput = () => {
   const [ text, setText] = useState("");
   const [ imagePreview, setImagePreview ] = useState(null);
   const fileInputRef = useRef(null);
-  const {sendMessage} = useChatStore;
+  const {sendMessage} = useChatStore();
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
