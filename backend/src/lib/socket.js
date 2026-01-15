@@ -1,6 +1,5 @@
 import express from "express";
 import http from "http";
-import { userInfo } from "os";
 import { Server } from "socket.io";
 
 const app = express();
@@ -8,30 +7,44 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
   cors: {
-    origin: ["http://localhost:5173"],
+    origin:
+      process.env.NODE_ENV === "production"
+        ? true
+        : "http://localhost:5173",
     credentials: true,
   },
 });
 
-export function getReceiverSocketId(userId) {
-    return userSocketMap[userId];
-};
+// userId -> socketId
+const userSocketMap = {};
 
-// Used to store online users
-const userSocketMap = {}; // {userId : socketId}
+export function getReceiverSocketId(userId) {
+  return userSocketMap[userId];
+}
 
 io.on("connection", (socket) => {
-  console.log("A user connected:", socket.id);
+  console.log("User connected:", socket.id);
 
-    const userId = socket.handshake.query.userId
-    if(userId) userSocketMap[userId] = socket.id
+  const userId = socket.handshake.query.userId;
 
-    // io.emit() is used to send events to all the connected Clients.
-    io.emit("getOnlineUsers",Object.keys(userSocketMap));
+  if (userId) {
+    userSocketMap[userId] = socket.id;
+  }
+
+  // Send updated online users list
+  io.emit("getOnlineUsers", Object.keys(userSocketMap));
 
   socket.on("disconnect", () => {
-    console.log("A user disconnected:", socket.id);
-    delete userSocketMap[userId];
+    console.log("User disconnected:", socket.id);
+
+    // ✅ SAFE cleanup
+    for (const id in userSocketMap) {
+      if (userSocketMap[id] === socket.id) {
+        delete userSocketMap[id];
+        break;
+      }
+    }
+
     io.emit("getOnlineUsers", Object.keys(userSocketMap));
   });
 });
