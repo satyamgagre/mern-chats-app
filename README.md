@@ -50,23 +50,23 @@
 ## 📸 Screenshots
 
 ### Signup Page
-![Signup Page](./screenshots/signup.png)
+![Signup Page](frontend/public/signupPage.png)
 *Create a new account with username, email, and password*
 
 ### Login Page
-![Login Page](./screenshots/login.png)
+![Login Page](frontend/public/loginPage.png)
 *Secure login with JWT authentication*
 
 ### Homepage / Chat Interface
-![Homepage](./screenshots/homepage.png)
+![Homepage](frontend/public/homePage.png)
 *Real-time messaging interface with online users sidebar*
 
 ### Settings Page
-![Settings Page](./screenshots/settings.png)
+![Settings Page](frontend/public/settingsPage.png)
 *Customize your experience with multiple theme options*
 
 ### Profile Page
-![Profile Page](./screenshots/profile.png)
+![Profile Page](frontend/public/profilePage.png)
 *View and update your profile information and avatar*
 
 ---
