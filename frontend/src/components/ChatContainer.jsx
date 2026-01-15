@@ -48,7 +48,7 @@ const shouldShowDateSeparator = (currentMessage, previousMessage) => {
 };
 
 const ChatContainer = () => {
-  const { messages, getMessages, isMessagesLoading, selectedUser } =
+  const { messages, getMessages, isMessagesLoading, selectedUser, subscribeToMessages, unsubscribeFromMessages } =
     useChatStore();
   const { authUser } = useAuthStore();
   const messagesEndRef = useRef(null);
@@ -61,8 +61,11 @@ const ChatContainer = () => {
   useEffect(() => {
     if (selectedUser?._id) {
       getMessages(selectedUser._id);
+
+      subscribeToMessages();
+      return () => unsubscribeFromMessages()
     }
-  }, [selectedUser?._id, getMessages]);
+  }, [selectedUser?._id, getMessages, subscribeToMessages, unsubscribeFromMessages]);
 
   useEffect(() => {
     scrollToBottom();
@@ -130,6 +133,7 @@ const ChatContainer = () => {
                 {/* Message with animation */}
                 <div
                   className={`chat ${isMe ? "chat-end" : "chat-start"} animate-fadeIn`}
+                  ref={messagesEndRef}
                 >
                   <div className="chat-image avatar">
                     <div className="size-10 rounded-full border">
