@@ -69,9 +69,16 @@ export const sendMessage = async (req, res) => {
 
     await newMessage.save();
 
-    const receiverSocketId = getReceiverSocketId(receiverId);
-    if(receiverSocketId) {
+    // ✅ FIX: convert IDs to string
+    const receiverSocketId = getReceiverSocketId(receiverId.toString());
+    const senderSocketId = getReceiverSocketId(senderId.toString());
+
+    if (receiverSocketId) {
       io.to(receiverSocketId).emit("newMessage", newMessage);
+    }
+
+    if (senderSocketId) {
+      io.to(senderSocketId).emit("newMessage", newMessage);
     }
 
     res.status(201).json(newMessage);
